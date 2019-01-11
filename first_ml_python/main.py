@@ -97,3 +97,28 @@ for name, model in models:
 	names.append(name)
 	msg = "%s: %f (%f)" % (name, cv_results.mean(), cv_results.std())
 	print(msg)
+
+
+# Compare Algorithms
+fig = plt.figure()
+fig.suptitle('Algorithm Comparison')
+ax = fig.add_subplot(111)
+plt.boxplot(results)
+ax.set_xticklabels(names)
+plt.show()
+
+
+# Make predictions on validation dataset
+svm = SVC()
+svm.fit(X_train, Y_train)
+svm_predictions = svm.predict(X_validation)
+knn = KNeighborsClassifier()
+knn.fit(X_train,Y_train)
+knn_predictions = knn.predict(X_validation)
+print(accuracy_score(Y_validation, svm_predictions))
+print(confusion_matrix(Y_validation, svm_predictions))
+print(classification_report(Y_validation, svm_predictions))
+
+print(accuracy_score(Y_validation, knn_predictions))
+print(confusion_matrix(Y_validation, knn_predictions))
+print(classification_report(Y_validation, knn_predictions))
